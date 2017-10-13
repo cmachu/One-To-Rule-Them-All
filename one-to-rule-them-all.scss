@@ -1,0 +1,20 @@
+@mixin generate-simple($class, $from, $to, $step){
+  $i: $from;
+  @while $i < $to+$step {
+    .#{$class}-#{$i}{
+      #{$class}: #{$i}px;
+    }
+    $i: $i + $step;
+  }
+}
+
+@mixin generate-pack($class, $pack, $from, $to, $step){
+  @each $item in $pack {
+    @include generate-simple(#{$class}-#{$item},$from,$to, $step);
+  }
+}
+
+$pack: 'top' 'bottom' 'left' 'right';
+
+@include generate-pack('margin', $pack, 0, 100, 5);
+@include generate-pack('padding', $pack, 0, 100, 5);
